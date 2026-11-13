@@ -35,23 +35,30 @@
                     New Task
                 </div>
                 <div class="card-body">
-                    <!-- New Task Form -->
-                    <form action="/create" method="POST">
-                        @csrf
-
-                        <!-- Task Name -->
-                        <div class="mb-3">
-                            <label for="task-name" class="form-label">Task</label>
-                            <input type="text" name="name" id="task-name" class="form-control">
-                        </div>
-
-                        <!-- Add Task Button -->
-                        <div>
+                    <!-- نموذج التعديل أو الإضافة بدون تداخل -->
+                    @if(isset($task))
+                        <form action="/update/{{ $task->id }}" method="POST">
+                            @csrf
+                            <div class="mb-3">
+                                <label for="task-name" class="form-label">Update Task</label>
+                                <input type="text" name="name" id="task-name" class="form-control" value="{{ $task->name }}">
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa fa-edit me-2"></i>Update Task
+                            </button>
+                        </form>
+                    @else
+                        <form action="/create" method="POST">
+                            @csrf
+                            <div class="mb-3">
+                                <label for="task-name" class="form-label">New Task</label>
+                                <input type="text" name="name" id="task-name" class="form-control">
+                            </div>
                             <button type="submit" class="btn btn-primary">
                                 <i class="fa fa-plus me-2"></i>Add Task
                             </button>
-                        </div>
-                    </form>
+                        </form>
+                    @endif
                 </div>
             </div>
 
@@ -69,36 +76,28 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Task 1</td>
-                                <td>
-                                    <form action="#" method="POST">
-                                        <button type="submit" class="btn btn-danger">
-                                            <i class="fa fa-trash me-2"></i>Delete
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Task 2</td>
-                                <td>
-                                    <form action="#" method="POST">
-                                        <button type="submit" class="btn btn-danger">
-                                            <i class="fa fa-trash me-2"></i>Delete
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Task 3</td>
-                                <td>
-                                    <form action="#" method="POST">
-                                        <button type="submit" class="btn btn-danger">
-                                            <i class="fa fa-trash me-2"></i>Delete
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
+                            @foreach($tasks as $task)
+                                <tr>
+                                    <td>{{ $task->name }}</td>
+                                    <td>
+                                        <!-- زر التعديل -->
+                                        <form action="/edit/{{ $task->id }}" method="POST" class="d-inline">
+                                            @csrf
+                                            <button type="submit" class="btn btn-info">
+                                                <i class="fa fa-edit me-2"></i>Edit
+                                            </button>
+                                        </form>
+
+                                        <!-- زر الحذف -->
+                                        <form action="/delete/{{ $task->id }}" method="POST" class="d-inline">
+                                            @csrf
+                                            <button type="submit" class="btn btn-danger">
+                                                <i class="fa fa-trash me-2"></i>Delete
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
