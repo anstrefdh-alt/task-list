@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\UserController;
 
 // مسار عرض المهام
 Route::get('/tasks', function () {
@@ -35,3 +36,10 @@ Route::post('/delete/{id}', function ($id) {
     DB::table('tasks')->where('id', $id)->delete();
     return redirect()->back();
 });
+
+// مسارات المستخدمين (Users) عبر UserController
+Route::get('/users', [UserController::class, 'index']);
+Route::post('/users/create', [UserController::class, 'create']);
+Route::post('/users/edit/{id}', [UserController::class, 'edit']);
+Route::post('/users/update/{id}', [UserController::class, 'update']);
+Route::post('/users/delete/{id}', [UserController::class, 'destroy']);

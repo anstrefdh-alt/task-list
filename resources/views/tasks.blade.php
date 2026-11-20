@@ -35,7 +35,7 @@
                     New Task
                 </div>
                 <div class="card-body">
-                    <!-- نموذج التعديل أو الإضافة بدون تداخل -->
+
                     @if(isset($task))
                         <form action="/update/{{ $task->id }}" method="POST">
                             @csrf
@@ -80,7 +80,7 @@
                                 <tr>
                                     <td>{{ $task->name }}</td>
                                     <td>
-                                        <!-- زر التعديل -->
+                                       
                                         <form action="/edit/{{ $task->id }}" method="POST" class="d-inline">
                                             @csrf
                                             <button type="submit" class="btn btn-info">
@@ -88,7 +88,7 @@
                                             </button>
                                         </form>
 
-                                        <!-- زر الحذف -->
+                                       
                                         <form action="/delete/{{ $task->id }}" method="POST" class="d-inline">
                                             @csrf
                                             <button type="submit" class="btn btn-danger">
@@ -105,7 +105,7 @@
         </div>
     </div>
 
-    <!-- JavaScripts -->
+   
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
